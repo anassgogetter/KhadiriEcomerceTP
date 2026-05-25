@@ -1,0 +1,38 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Home - SymphonyEcom Academy{% endblock %}
+
+{% block content %}
+    <section class="course-hero p-5 mb-4 rounded-3">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <p class="section-kicker mb-2">Digital learning shop</p>
+                <h1 class="display-5 fw-bold">Build your next skill with focused courses</h1>
+                <p class="fs-5">Browse practical courses, save favorites, manage your learning library, and test a complete Symfony e-commerce flow.</p>
+                <a href="{{ path('app_catalog_all') }}" class="btn btn-primary btn-lg">Explore catalog</a>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0">
+                <img class="hero-course-image rounded" src="{{ asset('images/courses/programming.png') }}" alt="SymphonyEcom Academy">
+            </div>
+        </div>
+    </section>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for slug, course in courses %}
+            <div class="col">
+                <div class="card h-100">
+                    <img class="course-card-image rounded-top" src="{{ asset(course.imagePath) }}" alt="{{ course.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.name }}</h5>
+                        <p class="text-muted">{{ course.category.name }} by {{ course.author.name }}</p>
+                        <p>{{ course.synopsis }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <strong>{{ course.price|number_format(2, ',', ' ') }} DH</strong>
+                        <a href="{{ path('app_catalog_view', {slug: slug}) }}" class="btn btn-outline-primary btn-sm">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

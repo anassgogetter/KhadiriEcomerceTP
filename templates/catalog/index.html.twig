@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Catalog{% endblock %}
+
+{% block content %}
+    {{ include('partials/_jumbotron.html.twig') }}
+
+    <div class="market-shell">
+        <aside class="market-aside">
+            <p class="section-kicker mb-2">Learning paths</p>
+            <h2 class="h4">Choose, checkout, and keep your resources in one place.</h2>
+            <p class="text-muted mb-0">Fresh design, focused cards, and quick actions for a simple course shop experience.</p>
+        </aside>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for slug, course in courses %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img class="course-card-image rounded-top" src="{{ asset(course.imagePath) }}" alt="{{ course.name }}">
+                        <div class="card-body">
+                            <p class="section-kicker small mb-2">{{ course.category.name }}</p>
+                            <h5 class="card-title">{{ course.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">by {{ course.author.name }}</h6>
+                            <p class="card-text">{{ course.synopsis }}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">{{ course.price|number_format(2, ',', ' ') }} DH</span>
+                            <a href="{{ path('app_catalog_view', {slug: slug}) }}" class="btn btn-outline-primary btn-sm">View course</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
