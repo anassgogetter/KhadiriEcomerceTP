@@ -23,8 +23,11 @@ services:
         build:
             context: ./infra/
             dockerfile: ./php/Dockerfile
+        command: sh -c "mkdir -p var/cache var/log var/sessions && chown -R www-data:www-data var && php-fpm"
         volumes:
             - .:/var/www/html:cached
+            - symfony_vendor:/var/www/html/vendor
+            - symfony_var:/var/www/html/var
             - ./infra/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
             - ./infra/php/config/php.ini:/usr/local/etc/php/php.ini
             - ./infra/php/xdebug/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -66,7 +69,8 @@ volumes:
     db_admin_data:
     mysql:
     mysql_user:
+    symfony_vendor:
+    symfony_var:
 
 networks:
     internal_network:
-        name: internal_network
